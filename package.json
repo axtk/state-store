@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx doctest cleanup && npx doctest build && npx jest && npx doctest cleanup"
+    "test": "npx doctest cleanup && npx doctest build ./src/**/*.js && npx jest && npx doctest cleanup"
   },
   "keywords": [
     "shared state",
