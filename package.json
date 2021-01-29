@@ -1,9 +1,9 @@
 {
-  "name": "immutable-store",
+  "name": "store",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx doctest cleanup && npx doctest build ./src/**/*.js && npx jest && npx doctest cleanup"
+    "test": "node -r esm test.js"
   },
   "keywords": [
     "shared state",
@@ -13,11 +13,10 @@
   "author": "axtk",
   "license": "ISC",
   "dependencies": {
+    "event-manager": "github:axtk/event-manager",
     "immutable": "^4.0.0-rc.12"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "doctest": "github:axtk/doctest",
-    "jest": "^26.4.2"
+    "esm": "^3.2.25"
   }
 }
