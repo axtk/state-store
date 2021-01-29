@@ -14,7 +14,8 @@ class Store {
         this.eventManager = new EventManager();
     }
     onUpdate(handler) {
-        return this.eventManager.addEventListener(StoreEvent.UPDATE, handler);
+        if (typeof handler !== 'function') return;
+        return this.eventManager.addEventListener(StoreEvent.UPDATE, handler).remove;
     }
     getState() {
         return toPlain(this.state);
