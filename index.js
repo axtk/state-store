@@ -15,7 +15,7 @@ class Store {
     }
     onUpdate(handler) {
         if (typeof handler !== 'function') return;
-        return this.eventManager.addEventListener(StoreEvent.UPDATE, handler).remove;
+        return this.eventManager.addListener(StoreEvent.UPDATE, handler).remove;
     }
     getState() {
         return toPlain(this.state);
@@ -31,26 +31,26 @@ class Store {
     }
     setState(plainObject = {}) {
         this.state = fromJS(plainObject);
-        this.eventManager.dispatchEvent(StoreEvent.UPDATE);
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     set(path, plainValue) {
         this.state = this.state.setIn(toPath(path), fromJS(plainValue));
-        this.eventManager.dispatchEvent(StoreEvent.UPDATE);
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     mergeState(plainObject = {}) {
         this.state = this.state.merge(fromJS(plainObject));
-        this.eventManager.dispatchEvent(StoreEvent.UPDATE);
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     merge(path, plainObject = {}) {
         this.state = this.state.mergeIn(toPath(path), fromJS(plainObject));
-        this.eventManager.dispatchEvent(StoreEvent.UPDATE);
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     removeState() {
         this.setState({});
     }
     remove(path) {
         this.state = this.state.removeIn(toPath(path));
-        this.eventManager.dispatchEvent(StoreEvent.UPDATE);
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
 }
 
