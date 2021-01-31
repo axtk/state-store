@@ -14,8 +14,8 @@ class Store {
         this.eventManager = new EventManager();
     }
     onUpdate(handler) {
-        if (typeof handler !== 'function') return;
-        return this.eventManager.addListener(StoreEvent.UPDATE, handler).remove;
+        let listener = this.eventManager.addListener(StoreEvent.UPDATE, handler);
+        if (listener) return listener.remove;
     }
     getState() {
         return toPlain(this.state);
