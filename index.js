@@ -14,8 +14,14 @@ class Store {
         this.eventManager = new EventManager();
     }
     onUpdate(handler) {
-        let listener = this.eventManager.addListener(StoreEvent.UPDATE, handler);
-        if (listener) return listener.remove;
+        if (typeof handler !== 'function')
+            throw new Error('handler is not a function');
+
+        let listener = this.eventManager.addListener(StoreEvent.UPDATE, () => {
+            handler(this.getState());
+        });
+
+        return () => listener.remove();
     }
     getState() {
         return toPlain(this.state);
