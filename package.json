@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "event-manager": "github:axtk/event-manager",
-    "immutable": "^4.0.0-rc.12"
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "esbuild": "^0.8.42",

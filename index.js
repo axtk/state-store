@@ -1,16 +1,17 @@
-import {Map as ImmutableMap, Collection as ImmutableCollection, fromJS} from 'immutable';
+import updateBranch from './lib/updateBranch';
 import EventManager from 'event-manager';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import unset from 'lodash/unset';
+import merge from 'lodash/merge';
 
 const StoreEvent = {
     UPDATE: 'UPDATE'
 };
 
-const toPath = path => Array.isArray(path) ? path : (typeof path === 'string' ? path.split('.') : [path]);
-const toPlain = x => x instanceof ImmutableCollection ? x.toJS() : x;
-
 class Store {
     constructor() {
-        this.state = new ImmutableMap();
+        this.state = {};
         this.eventManager = new EventManager();
     }
     onUpdate(handler) {
@@ -24,38 +25,34 @@ class Store {
         return () => listener.remove();
     }
     getState() {
-        return toPlain(this.state);
-    }
-    getImmutableState() {
         return this.state;
     }
-    get(path) {
-        return toPlain(this.getImmutable(path));
+    get(path, defaultValue) {
+        return get(this.state, path, defaultValue);
     }
-    getImmutable(path) {
-        return this.state.getIn(toPath(path));
-    }
-    setState(plainObject = {}) {
-        this.state = fromJS(plainObject);
+    setState(x) {
+        this.state = updateBranch(x);
         this.eventManager.dispatch(StoreEvent.UPDATE);
     }
-    set(path, plainValue) {
-        this.state = this.state.setIn(toPath(path), fromJS(plainValue));
+    set(path, x) {
+        this.state = updateBranch(set(this.state, path, x), path);
         this.eventManager.dispatch(StoreEvent.UPDATE);
     }
-    mergeState(plainObject = {}) {
-        this.state = this.state.merge(fromJS(plainObject));
+    mergeState(x) {
+        this.state = updateBranch(merge(this.state, x));
         this.eventManager.dispatch(StoreEvent.UPDATE);
     }
-    merge(path, plainObject = {}) {
-        this.state = this.state.mergeIn(toPath(path), fromJS(plainObject));
+    merge(path, x) {
+        this.state = updateBranch(set(this.state, path, merge(get(this.state, path), x)), path);
         this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     removeState() {
-        this.setState({});
+        this.state = {};
+        this.eventManager.dispatch(StoreEvent.UPDATE);
     }
     remove(path) {
-        this.state = this.state.removeIn(toPath(path));
+        unset(this.state, path);
+        this.state = updateBranch(this.state, path);
         this.eventManager.dispatch(StoreEvent.UPDATE);
     }
 }
