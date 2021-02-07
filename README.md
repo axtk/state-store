@@ -7,3 +7,7 @@ An instance of the `Store` class:
 - exposes a set of methods to manipulate the stored data (like `.mergeState(data)`),
 - allows for subscriptions to updates it receives (via `.onUpdate(handler)`),
 - maintains the least required immutability by updating only modified parts.
+
+## Also
+
+- *[react-store](https://github.com/axtk/react-store)*, an extension of *store* with React hooks
