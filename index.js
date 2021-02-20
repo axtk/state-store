@@ -10,9 +10,12 @@ const StoreEvent = {
 };
 
 class Store {
-    constructor() {
+    constructor(initialState) {
         this.state = {};
         this.eventManager = new EventManager();
+
+        if (initialState != null)
+            this.setState(initialState);
     }
     onUpdate(handler) {
         if (typeof handler !== 'function')
