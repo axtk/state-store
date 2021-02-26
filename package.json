@@ -1,6 +1,7 @@
 {
-  "name": "store",
+  "name": "@axtk/store",
   "version": "1.0.0",
+  "description": "A lightweight storage for shared state",
   "main": "index.js",
   "scripts": {
     "build": "npx esbuild index.js --bundle --outfile=index.build.js --global-name=Store",
@@ -8,18 +9,25 @@
     "test": "node -r esm test.js"
   },
   "keywords": [
-    "shared state",
     "store",
+    "shared state",
     "immutable"
   ],
   "author": "axtk",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axtk/store.git"
+  },
   "dependencies": {
-    "event-manager": "github:axtk/event-manager",
+    "@axtk/event-manager": "^1.1.3",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "esbuild": "^0.8.42",
+    "esbuild": "^0.8.52",
     "esm": "^3.2.25"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

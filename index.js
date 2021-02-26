@@ -1,5 +1,5 @@
+import EventManager from '@axtk/event-manager';
 import updateBranch from './lib/updateBranch';
-import EventManager from 'event-manager';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import unset from 'lodash/unset';
