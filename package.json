@@ -10,8 +10,7 @@
   },
   "keywords": [
     "store",
-    "shared state",
-    "immutable"
+    "shared state"
   ],
   "author": "axtk",
   "license": "MIT",
