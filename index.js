@@ -38,7 +38,7 @@ class Store {
         return get(this.state, path, defaultValue);
     }
     setState(x) {
-        this.state = x;
+        this.state = typeof x === 'function' ? x(this.state) : x;
         this.dispatchUpdate();
     }
     set(path, x) {
