@@ -1,6 +1,6 @@
 {
   "name": "@axtk/store",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A lightweight storage for shared state",
   "main": "index.js",
   "scripts": {
