@@ -42,7 +42,7 @@ class Store {
         this.dispatchUpdate();
     }
     set(path, x) {
-        this.state = set(this.state, path, x);
+        this.state = set(this.state || {}, path, x);
         this.dispatchUpdate();
     }
     mergeState(x) {
@@ -50,7 +50,7 @@ class Store {
         this.dispatchUpdate();
     }
     merge(path, x) {
-        this.state = set(this.state, path, merge(get(this.state, path), x));
+        this.state = set(this.state || {}, path, merge(get(this.state, path), x));
         this.dispatchUpdate();
     }
     removeState() {
