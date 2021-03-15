@@ -1,5 +1,4 @@
 import EventManager from '@axtk/event-manager';
-import updateBranch from './lib/updateBranch';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import unset from 'lodash/unset';
@@ -11,7 +10,7 @@ const StoreEvent = {
 
 class Store {
     constructor(initialState) {
-        this.state = {};
+        this.state = null;
         this.eventManager = new EventManager();
         this.revision = 0;
 
@@ -29,6 +28,9 @@ class Store {
 
         return () => listener.remove();
     }
+    dispatchUpdate() {
+        this.eventManager.dispatch(StoreEvent.UPDATE);
+    }
     getState() {
         return this.state;
     }
@@ -36,29 +38,28 @@ class Store {
         return get(this.state, path, defaultValue);
     }
     setState(x) {
-        this.state = updateBranch(x);
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.state = x;
+        this.dispatchUpdate();
     }
     set(path, x) {
-        this.state = updateBranch(set(this.state, path, x), path);
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.state = set(this.state, path, x);
+        this.dispatchUpdate();
     }
     mergeState(x) {
-        this.state = updateBranch(merge(this.state, x));
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.state = merge(this.state, x);
+        this.dispatchUpdate();
     }
     merge(path, x) {
-        this.state = updateBranch(set(this.state, path, merge(get(this.state, path), x)), path);
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.state = set(this.state, path, merge(get(this.state, path), x));
+        this.dispatchUpdate();
     }
     removeState() {
-        this.state = {};
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.state = null;
+        this.dispatchUpdate();
     }
     remove(path) {
         unset(this.state, path);
-        this.state = updateBranch(this.state, path);
-        this.eventManager.dispatch(StoreEvent.UPDATE);
+        this.dispatchUpdate();
     }
     getRevision() {
         return this.revision;
