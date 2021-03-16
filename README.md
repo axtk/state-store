@@ -9,7 +9,7 @@ An instance of the `Store` class:
 - exposes a set of methods to manipulate the stored data (like `.mergeState(data)`), and
 - allows for subscriptions to updates it receives (via `.onUpdate(handler)`).
 
-The data stored in the store's `state` is typically a mutable entity (an object or an array), and in typical use cases it will make sense to treat the data that has been passed to the store's getter methods or retrieved from the setter methods as read-only, so as not to cause changes in parts of the internal state of the store without its listeners being notified.
+If a store's `state` is an array or a plain object (which it typically is), data chunks that have been put into the store or retrieved from the store should be treated as read-only, because modifying them directly (e.g. without prior copying) will cause changes in the store state without its listeners being notified.
 
 # Also
 
