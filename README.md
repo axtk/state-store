@@ -9,6 +9,21 @@ An instance of the `Store` class:
 - exposes a set of methods to manipulate the stored data (like `.mergeState(data)`), and
 - allows for subscriptions to updates it receives (via `.onUpdate(handler)`).
 
+```js
+import {Store} from '@axtk/store';
+
+const taskStore = new Store();
+```
+
+In addition to this, the `ImmutableStore` class:
+- maintains immutability of the store state.
+
+```js
+import {ImmutableStore} from '@axtk/store';
+
+const taskStore = new ImmutableStore();
+```
+
 # Also
 
 - *[react-store](https://github.com/axtk/react-store)*, an extension of *store* with React hooks
