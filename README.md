@@ -14,7 +14,7 @@ In addition to this, the `ImmutableStore` class:
 
 ## Store API
 
-Both the `Store` and `ImmutableStore` classes have nearly identical APIs.
+Both the `Store` and `ImmutableStore` classes have nearly identical APIs, with the only difference being the type of the `state` property. But in most cases, `state` of a store should be accessed and updated by means of the store methods and shouldn't be used directly.
 
 ### Initialization
 
