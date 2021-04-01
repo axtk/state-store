@@ -1,8 +1,8 @@
 import {EventManager, RemoveListener} from '@axtk/event-manager';
 import {State} from './types';
 
-export type UpdateHandler = (x: AbstractStore) => void;
-export type StateTransform = (x: AbstractStore) => State;
+export type UpdateHandler = (store?: AbstractStore) => void;
+export type StateTransform = (store?: AbstractStore) => State;
 
 const UPDATE_EVENT = 'update';
 

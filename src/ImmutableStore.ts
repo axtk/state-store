@@ -3,7 +3,7 @@ import toPath from 'lodash/toPath';
 import {AbstractStore} from './AbstractStore';
 import {State, ImmutableState, Path} from './types';
 
-export type ImmutableStateTransform = (x: ImmutableStore) => ImmutableState;
+export type ImmutableStateTransform = (store?: ImmutableStore) => ImmutableState;
 
 const toPlain = x => x instanceof ImmutableCollection ? (x as ImmutableCollection<any, any>).toJS() : x;
 
