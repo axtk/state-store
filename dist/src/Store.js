@@ -1,10 +1,9 @@
-import BasicStore from './BasicStore';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import merge from 'lodash/merge';
 import unset from 'lodash/unset';
-
-class Store extends BasicStore {
+import { AbstractStore } from './AbstractStore';
+export class Store extends AbstractStore {
     get(path, defaultValue) {
         return get(this.state, path, defaultValue);
     }
@@ -25,5 +24,3 @@ class Store extends BasicStore {
         this.dispatchUpdate();
     }
 }
-
-export default Store;

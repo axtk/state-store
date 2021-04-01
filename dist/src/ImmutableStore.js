@@ -1,10 +1,8 @@
-import {Collection as ImmutableCollection, fromJS} from 'immutable';
+import { Collection as ImmutableCollection, fromJS } from 'immutable';
 import toPath from 'lodash/toPath';
-import BasicStore from './BasicStore';
-
+import { AbstractStore } from './AbstractStore';
 const toPlain = x => x instanceof ImmutableCollection ? x.toJS() : x;
-
-class ImmutableStore extends BasicStore {
+export class ImmutableStore extends AbstractStore {
     getState() {
         return toPlain(this.state);
     }
@@ -12,7 +10,7 @@ class ImmutableStore extends BasicStore {
         return toPlain(this.state.getIn(toPath(path), defaultValue));
     }
     setState(x) {
-        this.state = typeof x === 'function' ? x(this) : fromJS(x || {});
+        this.state = typeof x === 'function' ? x(this) : fromJS(x || {}).toMap();
         this.dispatchUpdate();
     }
     set(path, x) {
@@ -20,7 +18,7 @@ class ImmutableStore extends BasicStore {
         this.dispatchUpdate();
     }
     mergeState(x) {
-        this.state = this.state.merge(fromJS(x));
+        this.state = this.state.merge(fromJS(x).toMap());
         this.dispatchUpdate();
     }
     merge(path, x) {
@@ -32,5 +30,3 @@ class ImmutableStore extends BasicStore {
         this.dispatchUpdate();
     }
 }
-
-export default ImmutableStore;

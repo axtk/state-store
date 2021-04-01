@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/@axtk/store?labelColor=royalblue&color=royalblue&style=flat-square)](https://www.npmjs.com/package/@axtk/store)
 ![browser](https://img.shields.io/badge/browser-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
 ![node](https://img.shields.io/badge/node-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-✓-blue?labelColor=dodgerblue&color=dodgerblue&style=flat-square)
 
 _A lightweight storage for shared state_
 
