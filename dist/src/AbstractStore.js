@@ -20,17 +20,11 @@ export class AbstractStore {
     dispatchUpdate() {
         this.eventManager.dispatch(UPDATE_EVENT);
     }
-    getState() {
-        return this.state;
-    }
-    setState(x) {
-        this.state = typeof x === 'function' ? x(this) : (x || {});
-        this.dispatchUpdate();
-    }
-    removeState() {
-        this.setState(null);
-    }
     getRevision() {
         return this.revision;
+    }
+    setState(x) { }
+    removeState() {
+        this.setState(null);
     }
 }

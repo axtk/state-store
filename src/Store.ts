@@ -3,13 +3,22 @@ import set from 'lodash/set';
 import merge from 'lodash/merge';
 import unset from 'lodash/unset';
 import {AbstractStore} from './AbstractStore';
-import {State, Path} from './types';
+import {Path} from './types';
 
-export class Store extends AbstractStore {
-    get(path: Path, defaultValue?: any): any {
+export type StateTransform<State> = (store?: Store<State>) => State;
+
+export class Store<State> extends AbstractStore<State, State> {
+    getState(): State {
+        return this.state;
+    }
+    get<T>(path: Path, defaultValue?: T): T {
         return get(this.state, path, defaultValue);
     }
-    set(path: Path, x: any): void {
+    setState(x: State | StateTransform<State> | null): void {
+        this.state = typeof x === 'function' ? (x as StateTransform<State>)(this) : (x || {} as State);
+        this.dispatchUpdate();
+    }
+    set<T>(path: Path, x: T): void {
         this.state = set(this.state, path, x);
         this.dispatchUpdate();
     }
@@ -17,7 +26,7 @@ export class Store extends AbstractStore {
         this.state = merge(this.state, x);
         this.dispatchUpdate();
     }
-    merge(path: Path, x: any): void {
+    merge<T>(path: Path, x: T): void {
         this.state = set(this.state, path, merge(get(this.state, path), x));
         this.dispatchUpdate();
     }

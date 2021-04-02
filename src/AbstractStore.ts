@@ -1,17 +1,16 @@
 import {EventManager, RemoveListener} from '@axtk/event-manager';
-import {State} from './types';
 
-export type UpdateHandler = (store?: AbstractStore) => void;
-export type StateTransform = (store?: AbstractStore) => State;
+export type AbstractUpdateHandler<E, I> = (store?: AbstractStore<E, I>) => void;
+export type AbstractStateTransform<E, I> = (store?: AbstractStore<E, I>) => I;
 
 const UPDATE_EVENT = 'update';
 
-export class AbstractStore {
+export class AbstractStore<ExposedState, InternalState> {
     eventManager: EventManager<string, string>;
     revision: number;
-    state: State;
+    state: InternalState;
 
-    constructor(initialState?: State) {
+    constructor(initialState?: ExposedState) {
         this.eventManager = new EventManager();
         this.revision = 0;
         this.setState(initialState);
@@ -20,7 +19,7 @@ export class AbstractStore {
             this.revision = this.revision === Number.MAX_SAFE_INTEGER ? 1 : this.revision + 1;
         });
     }
-    onUpdate(handler: UpdateHandler): RemoveListener {
+    onUpdate(handler: AbstractUpdateHandler<ExposedState, InternalState>): RemoveListener {
         if (typeof handler !== 'function')
             throw new Error('handler is not a function');
 
@@ -33,17 +32,11 @@ export class AbstractStore {
     dispatchUpdate(): void {
         this.eventManager.dispatch(UPDATE_EVENT);
     }
-    getState(): State {
-        return this.state;
-    }
-    setState(x: State | StateTransform): void {
-        this.state = typeof x === 'function' ? x(this) : (x || {});
-        this.dispatchUpdate();
-    }
-    removeState(): void {
-        this.setState(null);
-    }
     getRevision(): number {
         return this.revision;
+    }
+    setState(x: ExposedState | AbstractStateTransform<ExposedState, InternalState> | null): void {}
+    removeState() {
+        this.setState(null);
     }
 }
