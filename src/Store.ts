@@ -1,7 +1,4 @@
-import get from 'lodash/get';
-import set from 'lodash/set';
-import merge from 'lodash/merge';
-import unset from 'lodash/unset';
+import {get, set, merge, unset} from 'lodash-es';
 import {AbstractStore} from './AbstractStore';
 import {Path} from './types';
 
@@ -19,7 +16,7 @@ export class Store<State> extends AbstractStore<State, State> {
         this.dispatchUpdate();
     }
     set<T>(path: Path, x: T): void {
-        this.state = set(this.state, path, x);
+        this.state = set<State>(this.state as unknown as object, path, x);
         this.dispatchUpdate();
     }
     mergeState(x: State): void {
@@ -27,7 +24,7 @@ export class Store<State> extends AbstractStore<State, State> {
         this.dispatchUpdate();
     }
     merge<T>(path: Path, x: T): void {
-        this.state = set(this.state, path, merge(get(this.state, path), x));
+        this.state = set<State>(this.state as unknown as object, path, merge(get(this.state, path), x));
         this.dispatchUpdate();
     }
     remove(path: Path): void {

@@ -1,5 +1,5 @@
 import { Collection as ImmutableCollection, fromJS } from 'immutable';
-import toPath from 'lodash/toPath';
+import { toPath } from 'lodash-es';
 import { AbstractStore } from './AbstractStore';
 const toPlain = x => x instanceof ImmutableCollection ? x.toJS() : x;
 export class ImmutableStore extends AbstractStore {

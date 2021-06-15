@@ -1,7 +1,4 @@
-import get from 'lodash/get';
-import set from 'lodash/set';
-import merge from 'lodash/merge';
-import unset from 'lodash/unset';
+import { get, set, merge, unset } from 'lodash-es';
 import { AbstractStore } from './AbstractStore';
 export class Store extends AbstractStore {
     getState() {

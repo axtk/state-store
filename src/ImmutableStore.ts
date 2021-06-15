@@ -1,5 +1,5 @@
 import {Collection as ImmutableCollection, Map as ImmutableMap, fromJS} from 'immutable';
-import toPath from 'lodash/toPath';
+import {toPath} from 'lodash-es';
 import {AbstractStore} from './AbstractStore';
 import {Path} from './types';
 
