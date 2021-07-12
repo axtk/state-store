@@ -10,7 +10,9 @@ export class ImmutableStore extends AbstractStore {
         return toPlain(this.state.getIn(toPath(path), defaultValue));
     }
     setState(x) {
-        this.state = typeof x === 'function' ? x(this) : fromJS(x || {}).toMap();
+        this.state = typeof x === 'function' ?
+            x(this) :
+            fromJS(x || {}).toMap();
         this.dispatchUpdate();
     }
     set(path, x) {

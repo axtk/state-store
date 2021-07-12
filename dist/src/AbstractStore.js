@@ -1,6 +1,9 @@
 import { EventManager } from '@axtk/event-manager';
 const UPDATE_EVENT = 'update';
 export class AbstractStore {
+    eventManager;
+    revision;
+    state;
     constructor(initialState) {
         this.eventManager = new EventManager();
         this.revision = 0;

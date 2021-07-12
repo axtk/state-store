@@ -15,7 +15,9 @@ export class ImmutableStore<State> extends AbstractStore<State, ImmutableMap<any
         return toPlain(this.state.getIn(toPath(path), defaultValue));
     }
     setState(x: State | ImmutableStateTransform<State> | null): void {
-        this.state = typeof x === 'function' ? (x as ImmutableStateTransform<State>)(this) : fromJS(x || {}).toMap();
+        this.state = typeof x === 'function' ?
+            (x as ImmutableStateTransform<State>)(this) :
+            (fromJS(x || {}) as ImmutableCollection<any, any>).toMap();
         this.dispatchUpdate();
     }
     set<T>(path: Path, x: T): void {
@@ -23,7 +25,7 @@ export class ImmutableStore<State> extends AbstractStore<State, ImmutableMap<any
         this.dispatchUpdate();
     }
     mergeState(x: State): void {
-        this.state = this.state.merge(fromJS(x).toMap());
+        this.state = this.state.merge((fromJS(x) as ImmutableCollection<any, any>).toMap());
         this.dispatchUpdate();
     }
     merge<T>(path: Path, x: T): void {
