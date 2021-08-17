@@ -1,4 +1,4 @@
-import {Store, ImmutableStore} from './';
+import {Store} from './';
 
 interface State {
     x?: number | string;
@@ -6,7 +6,7 @@ interface State {
     z?: {y: {x?: string}};
 }
 
-for (let store of [new Store<State>(), new ImmutableStore<State>()]) {
+for (let store of [new Store()]) {
     console.log(store.constructor.name);
     let state: State, x: State['x'];
 

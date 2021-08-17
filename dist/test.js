@@ -1,5 +1,5 @@
-import { Store, ImmutableStore } from './';
-for (let store of [new Store(), new ImmutableStore()]) {
+import { Store } from './';
+for (let store of [new Store()]) {
     console.log(store.constructor.name);
     let state, x;
     store.onUpdate(() => {
