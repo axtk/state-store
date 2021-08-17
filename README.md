@@ -4,17 +4,13 @@
 
 _A lightweight storage for shared state_
 
-An instance of the `Store` class:
-- is a storage for data shared across multiple components, which
+An instance of the `Store` class is a lightweight container for data, which:
 - exposes a set of methods to manipulate the stored data (like `.mergeState(data)`), and
 - allows for subscriptions to updates it receives (via `.onUpdate(handler)`).
 
-In addition to this, the `ImmutableStore` class:
-- maintains immutability of the store state.
+As an example, instances of the `Store` class can be used as a storage for shared state in React applications.
 
 ## Store API
-
-Both the `Store` and `ImmutableStore` classes have nearly identical APIs, with the only difference being the type of the `state` property. But in most cases, `state` of a store should be accessed and updated by means of the store methods and shouldn't be used directly.
 
 ### Initialization
 
@@ -24,14 +20,6 @@ import {Store} from '@axtk/store';
 const store = new Store();
 // With an initial state:
 // const store = new Store({location: {x: -1, y: 1}});
-```
-
-```js
-import {ImmutableStore} from '@axtk/store';
-
-const store = new ImmutableStore();
-// With an initial state:
-// const store = new ImmutableStore({location: {x: -1, y: 1}});
 ```
 
 ### Setters
