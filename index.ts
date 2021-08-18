@@ -57,6 +57,9 @@ export class Store {
         this.state = set(this.state as unknown as object, path, merge(get(this.state, path), x));
         this.dispatchUpdate();
     }
+    removeState() {
+        this.setState(null);
+    }
     remove(path: Path): void {
         unset(this.state, path);
         this.dispatchUpdate();
