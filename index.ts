@@ -1,5 +1,5 @@
 import {EventManager} from '@axtk/event-manager';
-import {get, set, merge, unset, toPath} from 'lodash-es';
+import {get, set, merge, unset} from 'lodash-es';
 
 const UPDATE_EVENT = 'update';
 
