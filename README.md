@@ -5,10 +5,10 @@
 _A lightweight storage for shared state_
 
 An instance of the `Store` class is a lightweight container for data, which:
-- exposes a set of methods to manipulate the stored data (like `.mergeState(data)`), and
+- exposes a set of methods to manipulate the stored data (like `.set(keyPath, data)`, `.get(keyPath)`), and
 - allows for subscriptions to updates it receives (via `.onUpdate(handler)`).
 
-As an example, instances of the `Store` class can be used as a storage for shared state in React applications.
+As an example, instances of the `Store` class can be used as a storage for shared state in React applications. See also *[react-store](https://github.com/axtk/react-store)* that adds a React hook for shared state management based on the `Store` class.
 
 ## Store API
 
@@ -22,34 +22,30 @@ const store = new Store();
 // const store = new Store({location: {x: -1, y: 1}});
 ```
 
+The setters and getters below make use of the key paths to access the nested values. With TypeScript, the key paths, the arguments, and the return values are automatically checked to match the type of the store state.
+
 ### Setters
 
 ```js
 store.setState({location: {x: 1, y: 0}});
-store.setState(store => {
-    let nextState = /* ... */;
-    return nextState;
-});
 ```
 
 ```js
-store.set('location.x', 1);
+store.set('location', {x: -1, y: 1});
 store.set(['location', 'x'], 1);
-```
-
-```js
-store.mergeState({location: {y: 2}});
-store.merge('location', {y: 2});
 ```
 
 ### Getters
 
 ```js
 let state = store.getState();
-let x = store.get('location.x');
+```
+
+```js
+let location = store.get('location');
 let y = store.get(['location', 'y']);
 // With a default value:
-// let x = store.get('location.x', 0);
+let z = store.get(['location', 'z'], 0);
 ```
 
 ### Subscription
@@ -67,11 +63,10 @@ unsubscribe(); // to remove the subscription
 ### Removal
 
 ```js
-store.remove('location.x');
-store.remove(['location', 'y']);
 store.removeState();
 ```
 
-## Also
-
-- *[react-store](https://github.com/axtk/react-store)*, an extension of *store* with a React hook for shared state management
+```js
+store.remove('location');
+store.remove(['location', 'y']);
+```

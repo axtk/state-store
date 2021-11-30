@@ -1,5 +1,7 @@
 import { EventManager } from '@axtk/event-manager';
-import { get, set, merge, unset } from 'lodash-es';
+import { getValue } from './lib/getValue';
+import { setValue } from './lib/setValue';
+import { removeValue } from './lib/removeValue';
 const UPDATE_EVENT = 'update';
 export class Store {
     eventManager;
@@ -30,30 +32,24 @@ export class Store {
     getState() {
         return this.state;
     }
-    get(path, defaultValue) {
-        return get(this.state, path, defaultValue);
+    get(keyPath, defaultValue) {
+        return getValue(this.state, keyPath, defaultValue);
     }
-    setState(x) {
-        this.state = typeof x === 'function' ? x(this) : (x || {});
+    setState(value) {
+        this.state = value;
         this.dispatchUpdate();
     }
-    set(path, x) {
-        this.state = set(this.state, path, x);
-        this.dispatchUpdate();
-    }
-    mergeState(x) {
-        this.state = merge(this.state, x);
-        this.dispatchUpdate();
-    }
-    merge(path, x) {
-        this.state = set(this.state, path, merge(get(this.state, path), x));
+    set(keyPath, value) {
+        if (this.state == null && keyPath != null)
+            this.state = {};
+        setValue(this.state, keyPath, value);
         this.dispatchUpdate();
     }
     removeState() {
-        this.setState(null);
+        this.setState(undefined);
     }
-    remove(path) {
-        unset(this.state, path);
+    remove(keyPath) {
+        removeValue(this.state, keyPath);
         this.dispatchUpdate();
     }
 }
