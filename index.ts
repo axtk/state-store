@@ -6,7 +6,10 @@ import {removeValue} from './lib/removeValue';
 
 const UPDATE_EVENT = 'update';
 
-export class Store<State = unknown, TypedNestedness extends number = 5> {
+export class Store<
+    State extends object = Record<PropertyKey, any>,
+    TypedNestedness extends number = 5
+> {
     eventManager: EventManager;
     revision: number;
     state: State;
