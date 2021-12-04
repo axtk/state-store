@@ -7,8 +7,8 @@ import {removeValue} from './lib/removeValue';
 const UPDATE_EVENT = 'update';
 
 export class Store<
-    State extends object = Record<PropertyKey, any>,
-    TypedNestedness extends number = 5
+    State extends object = Record<PropertyKey, unknown>,
+    TypedKeyPathDepth extends number = 5
 > {
     eventManager: EventManager;
     revision: number;
@@ -23,7 +23,7 @@ export class Store<
             this.revision = this.revision === Number.MAX_SAFE_INTEGER ? 1 : this.revision + 1;
         });
     }
-    onUpdate(handler: (store?: Store<State, TypedNestedness>) => void): () => void {
+    onUpdate(handler: (store?: Store<State, TypedKeyPathDepth>) => void): () => void {
         if (typeof handler !== 'function')
             throw new Error('handler is not a function');
 
@@ -42,7 +42,7 @@ export class Store<
     getState() {
         return this.state;
     }
-    get<K extends KeyPath<State, TypedNestedness>>(
+    get<K extends KeyPath<State, TypedKeyPathDepth>>(
         keyPath: K,
         defaultValue?: NestedProperty<State, K>,
     ): NestedProperty<State, K> {
@@ -52,7 +52,7 @@ export class Store<
         this.state = value;
         this.dispatchUpdate();
     }
-    set<K extends KeyPath<State, TypedNestedness>>(
+    set<K extends KeyPath<State, TypedKeyPathDepth>>(
         keyPath: K,
         value: NestedProperty<State, K>,
     ): void {
@@ -64,7 +64,7 @@ export class Store<
     removeState() {
         this.setState(undefined);
     }
-    remove<K extends KeyPath<State, TypedNestedness>>(keyPath: K): void {
+    remove<K extends KeyPath<State, TypedKeyPathDepth>>(keyPath: K): void {
         removeValue(this.state, keyPath);
         this.dispatchUpdate();
     }
